@@ -163,18 +163,16 @@ public class StringArrayUtils {
      */ // TODO
     public static String[] packConsecutiveDuplicates(String[] array) {
         int count = 0;
-        int length = array.length;
-        String[] newArr = new String[length];
+        String[] newArr = new String[array.length];
 
         for (int i = 0; i < array.length; i ++) {
             newArr[count] = array[i];
-            while (i + 1 < array.length && newArr[count].equals(array[i + 1])) {
-                newArr[count] = array[i];
+            while (i + 1 < array.length && array[i].equals(array[i + 1])) {
+                newArr[count] += array[i + 1];
                 i++;
             }
             count++;
         }
-
         String[] s = new String[count];
         s = Arrays.copyOfRange(newArr, 0, count);
         return s;
