@@ -100,7 +100,7 @@ public class StringArrayUtils {
 
 
 
-
+//return Arrays.stream(array).distinct().toArray(String[] ::new);
 
 
 
@@ -125,14 +125,13 @@ public class StringArrayUtils {
      * @return array with identical contents excluding values of `value`
      */ // TODO
     public static String[] removeValue(String[] array, String valueToRemove) {
-       final int len = array.length;
-        String [] arr = new String[len - 1];
-       for (int i = 0; i < array.length - 1; i++) {
-           if (!array[i].equals(valueToRemove)) {
-           arr[i] = array[i];
-           }
-       }
-        return arr;
+        List <String> list = new ArrayList<>(Arrays.asList(array));
+        list.removeAll(Arrays.asList(valueToRemove));
+        array = list.toArray(new String[0]);
+
+
+            return array;
+
     }
 
     /**
@@ -140,13 +139,22 @@ public class StringArrayUtils {
      * @return array of Strings with consecutive duplicates removes
      */ // TODO
     public static String[] removeConsecutiveDuplicates(String[] array) {
-        for (int i = 0; i < array.length - 1; i++) {
-            if (array[i].equals(array[i + 1])) {
-                        array[i] = "";
+        int count = 0;
+        int length = array.length;
+        String[] newArr = new String[length];
+
+        for (int i = 0; i < array.length; i ++) {
+            newArr[count] = array[i];
+            while (i + 1 < array.length && newArr[count].equals(array[i + 1])) {
+                newArr[count] = array[i];
+                i++;
+            }
+            count++;
         }
 
-    }
-        return array;
+        String[] s = new String[count];
+        s = Arrays.copyOfRange(newArr, 0, count);
+        return s;
 
     }
     /**
@@ -154,7 +162,23 @@ public class StringArrayUtils {
      * @return array of Strings with each consecutive duplicate occurrence concatenated as a single string in an array of Strings
      */ // TODO
     public static String[] packConsecutiveDuplicates(String[] array) {
-        return null;
+        int count = 0;
+        int length = array.length;
+        String[] newArr = new String[length];
+
+        for (int i = 0; i < array.length; i ++) {
+            newArr[count] = array[i];
+            while (i + 1 < array.length && newArr[count].equals(array[i + 1])) {
+                newArr[count] = array[i];
+                i++;
+            }
+            count++;
+        }
+
+        String[] s = new String[count];
+        s = Arrays.copyOfRange(newArr, 0, count);
+        return s;
+
     }
 
 
